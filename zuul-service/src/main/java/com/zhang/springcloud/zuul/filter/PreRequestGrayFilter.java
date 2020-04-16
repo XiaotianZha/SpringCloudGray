@@ -1,5 +1,6 @@
 package com.zhang.springcloud.zuul.filter;
 
+import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.zhang.springcloud.zuul.util.GrayHolder;
@@ -41,9 +42,13 @@ public class PreRequestGrayFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String gray=request.getParameter("gray");
+        //add header
+        ctx.addZuulRequestHeader("gray-head", gray);
+//        HystrixRequestContext.initializeContext();
         if (StringUtils.isNotEmpty(gray)){
             GrayHolder.setGray();
         }
+        LOGGER.info(GrayHolder.isGray());
         LOGGER.info(String.format("send %s request to %s",
                 request.getMethod(),
                 request.getRequestURL().toString()));

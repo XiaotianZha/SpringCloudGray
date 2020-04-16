@@ -40,3 +40,7 @@ ribbon:
   ConnectionTimeout: 3000
   ReadTimeout: 60000
 
+##使用配置文件配置rule，GrayHolder在GrayMetadataRule会单独加载，导致get取不到值，改用@Bean托管给spring统一加载
+#service-one:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.zhang.springcloud.zuul.ribbon.GrayMetadataRule
