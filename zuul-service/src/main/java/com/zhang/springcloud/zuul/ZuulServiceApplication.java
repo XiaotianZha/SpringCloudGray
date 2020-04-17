@@ -19,10 +19,10 @@ public class ZuulServiceApplication {
 		return new PreRequestGrayFilter();
 	}
 
-	@Bean
-	public PostRequestGrayFilter getPostFilter(){
-		return new PostRequestGrayFilter();
-	}
+//	@Bean
+//	public PostRequestGrayFilter getPostFilter(){
+//		return new PostRequestGrayFilter();
+//	}
 
 	@Bean
 	public IRule ribbonRule() {

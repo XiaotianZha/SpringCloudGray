@@ -5,7 +5,8 @@ import com.netflix.hystrix.strategy.concurrency.HystrixRequestVariableDefault;
 
 public class GrayHolder {
 
-    private  static  HystrixRequestVariableDefault<String> gray ;
+    private  static  HystrixRequestVariableDefault<String> gray =  new HystrixRequestVariableDefault<>();
+    private  static  HystrixRequestContext context;
    /* static {
         System.out.println("init holder");
     }*/
@@ -18,17 +19,18 @@ public class GrayHolder {
         return  gray.get();
     }
 
-    public static void setGray(){
+    public static void setGray(String isGray){
 //        if (!HystrixRequestContext.isCurrentThreadInitialized()) {
-            HystrixRequestContext.initializeContext();
+        context= HystrixRequestContext.initializeContext();
 //        }
-        gray =  new HystrixRequestVariableDefault<>();
-        gray.set("true");
+//        gray =  new HystrixRequestVariableDefault<>();
+        gray.set(isGray);
     }
 
     public static void reSet(){
 //        gray.remove();
-        gray.shutdown("true");
+        context.shutdown();
+//        gray.shutdown("true");
     }
 
 }

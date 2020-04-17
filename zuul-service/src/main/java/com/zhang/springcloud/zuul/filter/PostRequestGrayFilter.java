@@ -1,6 +1,5 @@
 package com.zhang.springcloud.zuul.filter;
 
-import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.zhang.springcloud.zuul.util.GrayHolder;
@@ -13,14 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 /**
  *  grayFilter
  */
-public class PreRequestGrayFilter extends ZuulFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreRequestGrayFilter.class);
+public class PostRequestGrayFilter extends ZuulFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostRequestGrayFilter.class);
 
     // 返回过滤器的类型
     // 可选项：pre, route, post, error
     @Override
     public String filterType() {
-        return "pre";
+        return "post";
     }
 
     // 返回一个int值来指定过滤器的执行顺序
@@ -39,21 +38,7 @@ public class PreRequestGrayFilter extends ZuulFilter {
     // 过滤器具体逻辑
     @Override
     public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
-        String gray=request.getParameter("gray");
-        //add header
-        ctx.addZuulRequestHeader("gray-head", gray);
-//        HystrixRequestContext.initializeContext();
-        if (StringUtils.isNotEmpty(gray)){
-            GrayHolder.setGray("true");
-        }else {
-            GrayHolder.setGray("false");
-        }
         LOGGER.info(GrayHolder.isGray());
-        LOGGER.info(String.format("send %s request to %s",
-                request.getMethod(),
-                request.getRequestURL().toString()));
 
         return null;
     }

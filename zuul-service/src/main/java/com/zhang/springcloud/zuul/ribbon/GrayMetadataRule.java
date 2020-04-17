@@ -17,6 +17,7 @@ public class GrayMetadataRule extends ZoneAvoidanceRule {
     @Override
     public Server choose(Object key) {
         String isgray=GrayHolder.isGray();
+//        GrayHolder.reSet();
         List<Server> serverList = this.getPredicate().getEligibleServers(this.getLoadBalancer().getAllServers(), key);
         List<Server>   backList=  serverList.stream().filter(server -> {
                 Map<String, String> metadata = ((DiscoveryEnabledServer) server).getInstanceInfo().getMetadata();

@@ -17,7 +17,7 @@ public class OneController {
 
     @RequestMapping(value = "/getTwoInfo", method = RequestMethod.GET)
     public String showTowInfo(){
-        return "gray false";
+        return "gray true";
 //        return client.showInfo();
     }
 
