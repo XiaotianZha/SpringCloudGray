@@ -15,6 +15,6 @@ public class TwoController {
 
     @GetMapping("/service-instance")
     public String showInfo(){
-        return "gray false";
+        return "gray true";
     }
 }
