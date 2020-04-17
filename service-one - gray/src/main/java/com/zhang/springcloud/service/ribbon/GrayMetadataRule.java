@@ -1,9 +1,9 @@
-package com.zhang.springcloud.zuul.ribbon;
+package com.zhang.springcloud.service.ribbon;
 
 import com.netflix.loadbalancer.Server;
 import com.netflix.loadbalancer.ZoneAvoidanceRule;
 import com.netflix.niws.loadbalancer.DiscoveryEnabledServer;
-import com.zhang.springcloud.zuul.util.GrayHolder;
+import com.zhang.springcloud.service.util.GrayHolder;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class GrayMetadataRule extends ZoneAvoidanceRule {
 
     @Override
     public Server choose(Object key) {
-        String isgray=GrayHolder.isGray();
+        String isgray= GrayHolder.isGray();
 //        GrayHolder.reSet();
         List<Server> serverList = this.getPredicate().getEligibleServers(this.getLoadBalancer().getAllServers(), key);
         List<Server>   backList=  serverList.stream().filter(server -> {
